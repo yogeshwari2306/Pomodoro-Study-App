@@ -1,0 +1,612 @@
+/* =========================================================
+   FocusBuddy — Base Styles
+   A clean, light, slightly playful design for a student app
+   ========================================================= */
+
+/* ---- Color palette & reusable values, defined once as variables ---- */
+:root {
+  --color-bg: #FBFAF7;          /* soft off-white background */
+  --color-card: #FFFFFF;        /* white cards */
+  --color-primary: #FF6B57;     /* warm coral-red accent (tomato!) */
+  --color-primary-dark: #E1543F;
+  --color-secondary: #4C9F70;   /* calm green for breaks/success */
+  --color-text: #2E2A26;        /* near-black, warmer than pure black */
+  --color-text-muted: #7A756E;
+  --color-border: #EDEAE4;
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --shadow-soft: 0 4px 16px rgba(46, 42, 38, 0.06);
+}
+
+/* ---- Reset & base ---- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+/* =========================================================
+   NAVIGATION BAR
+   ========================================================= */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 16px 32px;
+  background-color: var(--color-card);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+
+.brand-icon {
+  font-size: 1.5rem;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.nav-btn {
+  border: none;
+  background: transparent;
+  padding: 8px 16px;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-btn:hover {
+  background-color: var(--color-border);
+  color: var(--color-text);
+}
+
+/* The currently selected nav button */
+.nav-btn.active {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+/* =========================================================
+   MAIN CONTENT / PAGE SECTIONS
+   ========================================================= */
+.app-content {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 32px 20px 60px;
+}
+
+/* Pages are hidden by default; JS toggles the "active" class */
+.page {
+  display: none;
+  animation: fadeIn 0.25s ease;
+}
+
+.page.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.greeting {
+  font-size: 1.8rem;
+  margin-bottom: 24px;
+}
+
+.page-title {
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+}
+
+/* =========================================================
+   CARDS
+   ========================================================= */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.card {
+  background-color: var(--color-card);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-soft);
+}
+
+.card-title {
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  font-weight: 600;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.big-number {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.current-task {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.placeholder-text {
+  color: var(--color-text-muted);
+  font-size: 1.05rem;
+}
+
+/* =========================================================
+   PROGRESS BAR
+   ========================================================= */
+.progress-bar-track {
+  width: 100%;
+  height: 12px;
+  background-color: var(--color-border);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 12px;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: var(--color-primary);
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+.primary-btn {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  border-radius: var(--radius-md);
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.15s ease, background-color 0.2s ease;
+}
+
+.primary-btn:hover {
+  background-color: var(--color-primary-dark);
+  transform: translateY(-1px);
+}
+
+.primary-btn:active {
+  transform: translateY(0px) scale(0.98);
+}
+
+.quick-start-btn {
+  display: block;
+  margin: 0 auto;
+}
+
+/* =========================================================
+   POMODORO TIMER PAGE
+   ========================================================= */
+.timer-card {
+  text-align: center;
+  padding: 40px 24px;
+}
+
+.notif-prompt-btn {
+  display: block;
+  margin: 0 auto 18px;
+  font-size: 0.9rem;
+}
+
+.mode-badge {
+  display: inline-block;
+  background-color: rgba(255, 107, 87, 0.12);
+  color: var(--color-primary-dark);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  font-size: 0.85rem;
+  padding: 6px 16px;
+  border-radius: 999px;
+  margin-bottom: 20px;
+}
+
+/* Different accent color while on a break, just for a nice visual cue */
+.mode-badge.break-mode {
+  background-color: rgba(76, 159, 112, 0.12);
+  color: var(--color-secondary);
+}
+
+.timer-display {
+  font-size: 5rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin-bottom: 24px;
+  font-variant-numeric: tabular-nums; /* keeps digits from jittering side to side */
+}
+
+.current-task-field {
+  margin-bottom: 28px;
+}
+
+.current-task-field label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-bottom: 6px;
+}
+
+.current-task-field input {
+  width: 100%;
+  max-width: 320px;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  font-size: 1rem;
+}
+
+.timer-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.secondary-btn, .ghost-btn {
+  padding: 14px 24px;
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.secondary-btn {
+  background-color: var(--color-secondary);
+  color: white;
+  border: none;
+}
+
+.secondary-btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(0.95);
+}
+
+.ghost-btn {
+  background-color: transparent;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+}
+
+.ghost-btn:hover {
+  background-color: var(--color-border);
+}
+
+.session-counter {
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.toast-banner {
+  margin-top: 18px;
+  background-color: #FFF6E9;
+  color: #8A5A00;
+  padding: 10px 16px;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  animation: fadeIn 0.25s ease;
+}
+
+/* ---- Custom settings panel ---- */
+.settings-card {
+  margin-top: 20px;
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  color: var(--color-primary-dark);
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.95rem;
+  padding: 0;
+}
+
+.settings-panel {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 320px;
+}
+
+.settings-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.settings-row label {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+.settings-row input {
+  width: 80px;
+  padding: 8px 10px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.settings-error {
+  color: #C4402C;
+  font-size: 0.85rem;
+}
+
+/* =========================================================
+   TASKS PAGE
+   ========================================================= */
+.add-task-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.add-task-row input[type="text"] {
+  flex: 1;
+  min-width: 180px;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  font-size: 1rem;
+}
+
+.add-task-row select {
+  padding: 12px 10px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  font-size: 0.95rem;
+  background-color: white;
+}
+
+.task-list {
+  list-style: none;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.task-item:last-child {
+  border-bottom: none;
+}
+
+.task-checkbox {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-primary);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.task-title {
+  flex: 1;
+  font-size: 1rem;
+}
+
+.task-title-completed {
+  text-decoration: line-through;
+  color: var(--color-text-muted);
+}
+
+.priority-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+  text-transform: capitalize;
+  flex-shrink: 0;
+}
+
+.priority-low {
+  background-color: rgba(76, 159, 112, 0.15);
+  color: var(--color-secondary);
+}
+
+.priority-medium {
+  background-color: rgba(230, 168, 23, 0.15);
+  color: #A67300;
+}
+
+.priority-high {
+  background-color: rgba(255, 107, 87, 0.15);
+  color: var(--color-primary-dark);
+}
+
+.task-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.task-study-btn {
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 4px;
+  border-radius: 8px;
+  transition: background-color 0.15s ease;
+}
+
+.icon-btn:hover {
+  background-color: var(--color-border);
+}
+
+/* =========================================================
+   GLOBAL ERROR BANNER (shown when the backend is unreachable)
+   ========================================================= */
+.global-error-banner {
+  background-color: #FDECEA;
+  color: #A3372A;
+  text-align: center;
+  padding: 10px 16px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-bottom: 1px solid #F3C6C0;
+}
+
+/* =========================================================
+   GOALS PAGE
+   ========================================================= */
+.goal-card .progress-bar-track {
+  margin-top: 14px;
+  margin-bottom: 10px;
+}
+
+.goal-detail {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+.goal-input-row {
+  margin-bottom: 14px;
+  max-width: 280px;
+}
+
+.goal-input-row input {
+  width: 100px;
+}
+
+/* =========================================================
+   SESSIONS PAGE
+   ========================================================= */
+.weekly-chart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px;
+  height: 160px;
+  padding-top: 10px;
+}
+
+.chart-bar-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  height: 100%;
+}
+
+.chart-bar-value {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  min-height: 1em;
+}
+
+.chart-bar {
+  width: 60%;
+  max-width: 32px;
+  background-color: var(--color-primary);
+  border-radius: 6px 6px 2px 2px;
+  transition: height 0.4s ease;
+}
+
+.chart-bar-label {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.session-list {
+  list-style: none;
+}
+
+.session-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--color-border);
+  gap: 12px;
+}
+
+.session-item:last-child {
+  border-bottom: none;
+}
+
+.session-task-name {
+  font-weight: 500;
+}
+
+.session-details {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   RESPONSIVE / MOBILE
+   ========================================================= */
+@media (max-width: 600px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .navbar-links {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .nav-btn {
+    padding: 8px 10px;
+    font-size: 0.85rem;
+  }
+
+  .greeting, .page-title {
+    font-size: 1.4rem;
+  }
+}

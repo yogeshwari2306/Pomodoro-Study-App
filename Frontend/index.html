@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FocusBuddy 🍅 Pomodoro Study App</title>
+
+  <!-- Our custom stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===================== TOP NAVIGATION BAR ===================== -->
+  <header class="navbar">
+    <div class="navbar-brand">
+      <span class="brand-icon">🍅</span>
+      <span class="brand-name">FocusBuddy</span>
+    </div>
+
+    <!-- data-page attribute tells our JS which section to show when clicked -->
+    <nav class="navbar-links">
+      <button class="nav-btn active" data-page="dashboard">Dashboard</button>
+      <button class="nav-btn" data-page="pomodoro">Pomodoro</button>
+      <button class="nav-btn" data-page="tasks">Tasks</button>
+      <button class="nav-btn" data-page="sessions">Sessions</button>
+      <button class="nav-btn" data-page="goals">Goals</button>
+    </nav>
+  </header>
+
+  <!-- Shown whenever a backend request fails, so the app never just silently breaks -->
+  <div id="global-error-banner" class="global-error-banner" hidden></div>
+
+  <!-- ===================== MAIN CONTENT AREA ===================== -->
+  <main class="app-content">
+
+    <!-- ---------- DASHBOARD PAGE ---------- -->
+    <section id="dashboard" class="page active">
+      <h1 class="greeting">Good afternoon 👋</h1>
+
+      <div class="card-grid">
+
+        <!-- Today's Goal card -->
+        <div class="card">
+          <h2 class="card-title">Today's Goal</h2>
+          <p class="big-number"><span id="goal-completed">0</span> / <span id="goal-target">120</span> min</p>
+          <div class="progress-bar-track">
+            <div class="progress-bar-fill" id="goal-progress-fill" style="width: 0%;"></div>
+          </div>
+        </div>
+
+        <!-- Sessions card -->
+        <div class="card">
+          <h2 class="card-title">Sessions Today</h2>
+          <p class="big-number" id="sessions-today">0</p>
+        </div>
+
+        <!-- Study time card -->
+        <div class="card">
+          <h2 class="card-title">Study Time Today</h2>
+          <p class="big-number"><span id="study-time-today">0</span> min</p>
+        </div>
+
+        <!-- Current task card -->
+        <div class="card">
+          <h2 class="card-title">Current Task</h2>
+          <p class="current-task" id="current-task-display">No task selected</p>
+        </div>
+
+      </div>
+
+      <button class="primary-btn quick-start-btn" id="quick-start-btn">▶ Start Pomodoro</button>
+    </section>
+
+    <!-- ---------- POMODORO PAGE ---------- -->
+    <section id="pomodoro" class="page">
+      <h1 class="page-title">Pomodoro Timer</h1>
+
+      <div class="card timer-card">
+
+        <!-- Shows only if the browser supports notifications AND permission hasn't been decided yet -->
+        <button class="link-btn notif-prompt-btn" id="enable-notifications-btn" hidden>🔔 Enable notifications</button>
+
+        <!-- Shows FOCUS SESSION / SHORT BREAK / LONG BREAK -->
+        <p class="mode-badge" id="mode-badge">FOCUS SESSION</p>
+
+        <!-- The big MM:SS countdown -->
+        <p class="timer-display" id="timer-display">25:00</p>
+
+        <!-- Current task (real task picker arrives in Stage 3; plain text field for now) -->
+        <div class="current-task-field">
+          <label for="current-task-input">Current task:</label>
+          <input type="text" id="current-task-input" placeholder="What are you working on?">
+        </div>
+
+        <!-- Timer control buttons. We show/hide these with JS depending on state -->
+        <div class="timer-buttons">
+          <button class="primary-btn" id="start-btn">Start</button>
+          <button class="secondary-btn" id="pause-btn" hidden>Pause</button>
+          <button class="secondary-btn" id="resume-btn" hidden>Resume</button>
+          <button class="ghost-btn" id="reset-btn">Reset</button>
+          <button class="ghost-btn" id="skip-btn">Skip</button>
+        </div>
+
+        <p class="session-counter" id="session-counter">Session 1 of 4</p>
+
+        <!-- A small in-app banner used instead of/alongside browser notifications.
+             Full notification system (Notification API) is built in Stage 9. -->
+        <p class="toast-banner" id="toast-banner" hidden></p>
+      </div>
+
+      <!-- ---------- CUSTOM TIMER SETTINGS ---------- -->
+      <div class="card settings-card">
+        <button class="link-btn" id="toggle-settings-btn">⚙ Customize durations</button>
+
+        <div class="settings-panel" id="settings-panel" hidden>
+          <div class="settings-row">
+            <label for="focus-input">Focus (min)</label>
+            <input type="number" id="focus-input" min="1" max="180">
+          </div>
+          <div class="settings-row">
+            <label for="short-break-input">Short break (min)</label>
+            <input type="number" id="short-break-input" min="1" max="60">
+          </div>
+          <div class="settings-row">
+            <label for="long-break-input">Long break (min)</label>
+            <input type="number" id="long-break-input" min="1" max="90">
+          </div>
+          <div class="settings-row">
+            <label for="sessions-input">Sessions before long break</label>
+            <input type="number" id="sessions-input" min="1" max="10">
+          </div>
+          <p class="settings-error" id="settings-error" hidden></p>
+          <button class="primary-btn" id="save-settings-btn">Save Settings</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- TASKS PAGE ---------- -->
+    <section id="tasks" class="page">
+      <h1 class="page-title">Study Tasks</h1>
+
+      <!-- Add new task -->
+      <div class="card add-task-card">
+        <div class="add-task-row">
+          <input type="text" id="new-task-input" placeholder="Add a study task...">
+          <select id="new-task-priority">
+            <option value="">No priority</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
+          <button class="primary-btn" id="add-task-btn">Add</button>
+        </div>
+        <p class="settings-error" id="task-error" hidden></p>
+      </div>
+
+      <!-- Pending tasks -->
+      <div class="card">
+        <h2 class="card-title">Pending Tasks</h2>
+        <ul class="task-list" id="pending-task-list"></ul>
+        <p class="placeholder-text" id="no-pending-msg" hidden>No pending tasks. Add one above! 🎉</p>
+      </div>
+
+      <!-- Completed tasks -->
+      <div class="card">
+        <h2 class="card-title">Completed Tasks</h2>
+        <ul class="task-list" id="completed-task-list"></ul>
+        <p class="placeholder-text" id="no-completed-msg" hidden>No completed tasks yet.</p>
+      </div>
+    </section>
+
+    <!-- ---------- SESSIONS PAGE ---------- -->
+    <section id="sessions" class="page">
+      <h1 class="page-title">Session History</h1>
+
+      <div class="card-grid">
+        <div class="card">
+          <h2 class="card-title">Total Sessions</h2>
+          <p class="big-number" id="total-sessions">0</p>
+        </div>
+        <div class="card">
+          <h2 class="card-title">Total Study Time</h2>
+          <p class="big-number"><span id="total-minutes">0</span> min</p>
+        </div>
+        <div class="card">
+          <h2 class="card-title">Today's Sessions</h2>
+          <p class="big-number" id="sessions-today-page">0</p>
+        </div>
+        <div class="card">
+          <h2 class="card-title">Today's Study Time</h2>
+          <p class="big-number"><span id="study-time-today-page">0</span> min</p>
+        </div>
+      </div>
+
+      <!-- Simple weekly bar chart -->
+      <div class="card">
+        <h2 class="card-title">This Week</h2>
+        <div class="weekly-chart" id="weekly-chart"></div>
+      </div>
+
+      <!-- Recent sessions -->
+      <div class="card">
+        <h2 class="card-title">Recent Sessions</h2>
+        <ul class="session-list" id="recent-sessions-list"></ul>
+        <p class="placeholder-text" id="no-sessions-msg" hidden>No completed sessions yet. Start a Pomodoro! 🍅</p>
+      </div>
+    </section>
+
+    <!-- ---------- GOALS PAGE ---------- -->
+    <section id="goals" class="page">
+      <h1 class="page-title">Daily Goals</h1>
+
+      <div class="card goal-card">
+        <h2 class="card-title">Today's Goal</h2>
+        <p class="big-number"><span id="goal-completed-page">0</span> / <span id="goal-target-page">120</span> min</p>
+        <div class="progress-bar-track">
+          <div class="progress-bar-fill" id="goal-progress-fill-page" style="width: 0%;"></div>
+        </div>
+        <p class="goal-detail" id="goal-remaining-text">120 min remaining (0%)</p>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">Set Today's Target</h2>
+        <div class="settings-row goal-input-row">
+          <label for="goal-target-input">Target minutes</label>
+          <input type="number" id="goal-target-input" min="1" max="1440">
+        </div>
+        <p class="settings-error" id="goal-error" hidden></p>
+        <button class="primary-btn" id="save-goal-btn">Save Goal</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Our custom JavaScript (loaded last, after all HTML exists) -->
+  <script src="api.js"></script>
+  <script src="app.js"></script>
+  <script src="timer.js"></script>
+  <script src="notifications.js"></script>
+  <script src="tasks.js"></script>
+  <script src="sessions.js"></script>
+  <script src="goals.js"></script>
+</body>
+</html>
