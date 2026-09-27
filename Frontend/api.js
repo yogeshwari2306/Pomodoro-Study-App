@@ -7,7 +7,7 @@
 // =========================================================
 
 // Change this if your backend runs on a different port.
-const API_BASE_URL = 'http://localhost:8080/api';
+const API_BASE_URL = 'https://pomodoro-backend-07ea.onrender.com/api';
 
 // A custom error type so calling code can tell "the server said no"
 // (e.g. validation failed) apart from "the server couldn't be reached at all".
