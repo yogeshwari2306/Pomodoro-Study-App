@@ -1,3 +1,4 @@
+com\example\pomodoro\config\CorsConfig$1.class
 com\example\pomodoro\controller\SessionController.class
 com\example\pomodoro\model\StudySession.class
 com\example\pomodoro\controller\TimerSettingsController.class
