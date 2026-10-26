@@ -4,12 +4,6 @@ A simple and student-friendly **Pomodoro Study App** developed as a **Third Year
 
 The application is designed to help students improve their focus, manage study sessions, track their study time, and build consistent study habits using the Pomodoro technique.
 
-## 👩‍💻 Project Team
-
-This project was developed by:
-
-* **Yogeshwari Bhosale**
-* **Purva Khillare**
 
 ## 🎯 Project Objective
 
@@ -137,4 +131,4 @@ Some features that could be added in future versions include:
 **Course:** Bachelor of Computer Applications (BCA)
 **Project Type:** Third Year Major Project
 
-Developed by **Yogeshwari Bhosale & Purva Khillare**.
+Developed by **Yogeshwari Bhosale**.
